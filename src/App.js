@@ -6,36 +6,29 @@
  * @flow
  */
 
-import React, {Fragment} from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import React from 'react';
+import {Text, View} from 'react-native';
+
+import {Header} from 'react-native-elements';
+
+// Component
+import List from "./compornent/List"
+
+
+// Componentのルーティングをつける
 
 const App = () => {
   return (
-    <Fragment>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic">
-          <View>
-            <View>
-            </View>
-            <View>
-            </View>
-            <View>
-            </View>
-            <View>
-            </View>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </Fragment>
+    <View>
+      <Header
+        placement="left"
+        leftComponent={{ icon: 'menu', color: '#fff' }}
+        centerComponent={{ text: '内訳くん', style: { color: '#fff' } }}
+        rightComponent={{ icon: 'home', color: '#fff' }}
+      >
+      </Header>
+      <List/>
+    </View>
   );
 };
 
