@@ -23,7 +23,7 @@ import Storage from 'react-native-storage';
 import { AsyncStorage } from "react-native";
 
 // 画面の高さを取得
-const { height } = Dimensions.get("window");
+const { height,width } = Dimensions.get("window");
 
 const storage = new Storage({
   storageBackend: AsyncStorage
@@ -34,41 +34,46 @@ var label = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
 class List extends Component {
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1}}>
         <ScrollView showsVerticalScrollIndicator={false}> 
+        <View style={{
+          flexDirection: 'row',
+          flexWrap:'wrap'
+        }}>
           {label.map(r =>
             <Card
             key={r}
             title={r}
+            width={width*0.4}
             >
             <View style={{flexDirection: 'row',justifyContent: 'center'}}>
               <Button
                 title="-"
-                buttonStyle={{
-                  borderRadius: 50,
-                  width: 60,
-                }}
+                buttonStyle={styles.button}
               />
                 <Text>
                   10
                 </Text>
               <Button
                 title="+"
-                buttonStyle={{
-                  borderRadius: 50,
-                  width: 60,
-                }}
+                buttonStyle={styles.button}
               />
               </View>
             </Card>
           )}
+          </View>
         </ScrollView>
-        <Text style={{ height: height * 0.08, backgroundColor: 'skyblue', color: 'white' }}>Welcome to React Native</Text>
       </View>
     );
   }
 }
 
+const styles = StyleSheet.create({
+  button: {
+    borderRadius: 50,
+    width: 40,
+  },
+});
 
 
 const mapStateToProps = state => ({
