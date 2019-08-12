@@ -10,8 +10,16 @@ import { setName, deleteName } from '../redux';
 import { connect } from 'react-redux';
 import { store } from '../redux';
 
+// データの永続化
+import Storage from 'react-native-storage';
+import { AsyncStorage } from "react-native"
+
 // 画面の高さを取得
 const { height } = Dimensions.get("window");
+
+const storage = new Storage({
+  storageBackend: AsyncStorage
+});
 
 class List extends Component {
   render() {
