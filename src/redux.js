@@ -22,7 +22,6 @@ export const addCard = title => ({
   title,
 });
 
-
 INITIAL_STATE = {
   sum: 10,
 }
