@@ -7,19 +7,22 @@
  */
 
 import React from 'react';
-import {Text, View} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  Dimensions,
+} from 'react-native';
 
 import {Header} from 'react-native-elements';
 
 // Component
-import List from "./compornent/List"
+import List from "./compornent/List";
 
-
-// Componentのルーティングをつける
-
+// Componentのルーティング
 const App = () => {
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <Header
         placement="left"
         leftComponent={{ icon: 'menu', color: '#fff' }}
