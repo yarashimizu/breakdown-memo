@@ -4,10 +4,6 @@ import {
   createStore,
 } from 'redux';
 
-// actions.js
-// actionはreduxの機能でなく、オブジェクトを作るための純粋なjsの関数です。
-// 下のcloseKabayaの3行をchromeを開き、command + option + iでコンソールを開き貼り付けましょう。
-// その後、console.log(deleteName())で、{type: "DELETE_NAME", name: ''}というオブジェクトが生成されるのを確かめましょう。
 export const deleteName = () => ({  
   type: 'DELETE_NAME',
   name: ''
@@ -40,17 +36,3 @@ export const reducers = combineReducers({
 
 // store.js
 export const store = createStore(reducers)
-
-// storeは巨大なjsonです。storeの中身を取り出すにはgetStateメソッドを使います。
-// エミュレータでcommand + dを押し、enable remote debugをクリックしましょう。
-// debuggerが現れるので、consoleタブをクリックし、エミュレータ上でアプリをcommandd + rで再起動しましょう。
-console.log(store.getState)
-
-// arrayやobjectを綺麗に表示したい時はconsole.tableが便利です。
-console.table(store.getState)
-
-// storeはjsonです。つまりjsのオブジェクトです。 jsの関数のtypeofでstoreのstateがオブジェクトであることを確かめましょう。
-console.log(typeof store.getState)
-
-// storeもまたjsのオブジェクトであり、４つしかメソッドを持たないことを確認しておきましょう。
-console.log(store)

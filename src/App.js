@@ -11,7 +11,9 @@ import {
 import { Provider } from 'react-redux';
 import { store } from './redux';
 import { connect } from 'react-redux';
-import { setName, deleteName } from './redux';
+
+// Container
+// import { ListContainer } from "./container/ListContainer"
 
 // Component
 import {Header} from 'react-native-elements';
