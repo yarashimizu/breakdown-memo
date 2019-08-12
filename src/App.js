@@ -37,7 +37,8 @@ const App = () => {
 
 const mapStateToProps = state => ({
   // storeは巨大なJsonの塊なので、nameにjsonから取って来たデータを代入している。 
-  sum: state.cards.sum
+  sum: state.list.sum,
+  cards: state.list.cards
 })
 
 const mapDispatchToProps = {

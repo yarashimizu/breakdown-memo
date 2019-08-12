@@ -31,11 +31,6 @@ const storage = new Storage({
 });
 
 
-var label = [
-  {"id":"test1","title":"A","sum":10},
-  {"id":"test2","title":"B","sum":10}
-  ];
-
 class List extends Component {
   // ボタンクリック時
   onClick = (r) => {
@@ -65,7 +60,7 @@ class List extends Component {
   }
 
   render() {
-    const { sum } = this.props;
+    const { sum,cards } = this.props;
     return (
       <View style={{ flex: 1}}>
         <ScrollView showsVerticalScrollIndicator={false}> 
@@ -73,10 +68,10 @@ class List extends Component {
           flexDirection: 'row',
           flexWrap:'wrap'
         }}>
-          {label.map((r) =>
+          {Object.keys(cards).forEach(key =>
             <Card
-            key={r}
-            title={r.title}
+            key={cards[key]}
+            title={cards[key].title}
             width={width*0.4}
             >
             <View style={{
@@ -86,7 +81,7 @@ class List extends Component {
               <Button
                 title="-"
                 buttonStyle={styles.button}
-                onPress={() => this.props.downCount(sum)}
+                onPress={() => this.props.downCount(cards[key].id)}
               />
                 <Text>
                   {sum}
@@ -94,7 +89,7 @@ class List extends Component {
               <Button
                 title="+"
                 buttonStyle={styles.button}
-                onPress={() => this.props.upCount(sum)}
+                onPress={() => this.props.upCount(cards[key].id)}
               />
               </View>
             </Card>
@@ -116,7 +111,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   // storeは巨大なJsonの塊なので、nameにjsonから取って来たデータを代入している。 
-  sum: state.cards.sum,
+  sum: state.list.sum,
+  cards: state.list.cards
 })
 
 const mapDispatchToProps = {

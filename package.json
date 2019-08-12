@@ -11,6 +11,7 @@
     "@react-native-community/async-storage": "^1.6.1",
     "d3-graphviz": "^2.6.1",
     "graphviz-react": "^1.0.4",
+    "immutable": "^4.0.0-rc.12",
     "react": "16.8.6",
     "react-native": "0.60.4",
     "react-native-elements": "^1.1.0",

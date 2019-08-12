@@ -16,14 +16,24 @@ export const downCount = sum => ({
   sum,
 });
 
-// カード自体を増やす
-export const addCard = title => ({
-  type: "DOWN_COUNT",
+// カード自体を増やす(未実装)
+export const addCard = (id,title) => ({
+  type: "ADD_CARD",
+  id,
   title,
 });
 
+// カードタイトルを変更する(未実装)
+export const changeTitle = (id,title) => ({
+  type: "CHANGE_TITLE",
+  id,
+  title,
+});
+
+
 INITIAL_STATE = {
   sum: 10,
+  cards: [],//モデルを作成して配列として扱う
 }
 
 const reducer = (state = INITIAL_STATE, action) => {  
@@ -32,13 +42,15 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {...state, sum: action.sum + 1}
     case "DOWN_COUNT":
       return {...state, sum: action.sum - 1}
+    case "ADD_CARD":
+      return {...state }
     default:
       return state;
   }
 }
 
 export const reducers = combineReducers({  
-  cards: reducer
+  list: reducer
 })
 
 // store.js
