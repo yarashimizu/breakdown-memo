@@ -11,9 +11,10 @@ import {
 import { Provider } from 'react-redux';
 import { store } from './redux';
 import { connect } from 'react-redux';
+import { setName, deleteName, upCount, downCount} from './redux';
 
 // Container
-// import { ListContainer } from "./container/ListContainer"
+//import { ListContainer } from "./container/ListContainer"
 
 // Component
 import {Header} from 'react-native-elements';
@@ -36,13 +37,15 @@ const App = () => {
 
 const mapStateToProps = state => ({
   // storeは巨大なJsonの塊なので、nameにjsonから取って来たデータを代入している。 
-  name: state.user.name
+  sum: state.cards.sum
 })
 
 const mapDispatchToProps = {
   // importしたactionCreatorを記述。
   setName,
-  deleteName
+  deleteName,
+  upCount,
+  downCount,
 }
 
 export default connect(

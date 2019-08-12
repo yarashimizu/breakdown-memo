@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {
   Card,
@@ -14,7 +15,7 @@ import {
   Icon,
 } from 'react-native-elements'
 
-import { setName, deleteName } from '../redux';
+import { setName, deleteName, upCount, downCount } from '../redux';
 import { connect } from 'react-redux';
 import { store } from '../redux';
 
@@ -29,10 +30,42 @@ const storage = new Storage({
   storageBackend: AsyncStorage
 });
 
-var label = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+
+var label = [
+  {"id":"test1","title":"A","sum":10},
+  {"id":"test2","title":"B","sum":10}
+  ];
 
 class List extends Component {
+  // ボタンクリック時
+  onClick = (r) => {
+
+  }
+
+  // データ保存
+  _storeData = async () => {
+    try {
+      await AsyncStorage.setItem('test', 'I like to save it.');
+    } catch (error) {
+      // Error saving data
+    }
+  }
+
+  // データ取得
+  _retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('test');
+      if (value !== null) {
+        // We have data!!
+        console.log(value);
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  }
+
   render() {
+    const { sum } = this.props;
     return (
       <View style={{ flex: 1}}>
         <ScrollView showsVerticalScrollIndicator={false}> 
@@ -40,23 +73,28 @@ class List extends Component {
           flexDirection: 'row',
           flexWrap:'wrap'
         }}>
-          {label.map(r =>
+          {label.map((r) =>
             <Card
             key={r}
-            title={r}
+            title={r.title}
             width={width*0.4}
             >
-            <View style={{flexDirection: 'row',justifyContent: 'center'}}>
+            <View style={{
+              flexDirection: 'row',
+              justifyContent: 'center'
+            }}>
               <Button
                 title="-"
                 buttonStyle={styles.button}
+                onPress={() => this.props.downCount(sum)}
               />
                 <Text>
-                  10
+                  {sum}
                 </Text>
               <Button
                 title="+"
                 buttonStyle={styles.button}
+                onPress={() => this.props.upCount(sum)}
               />
               </View>
             </Card>
@@ -78,13 +116,15 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   // storeは巨大なJsonの塊なので、nameにjsonから取って来たデータを代入している。 
-  name: state.user.name
+  sum: state.cards.sum,
 })
 
 const mapDispatchToProps = {
   // importしたactionCreatorを記述。
   setName,
-  deleteName
+  deleteName,
+  upCount,
+  downCount,
 }
 
 export default connect(

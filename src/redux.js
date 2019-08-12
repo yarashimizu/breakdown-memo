@@ -15,8 +15,20 @@ export const setName = name => ({
   name: name,
 });
 
+export const upCount = sum => ({
+  type: "UP_COUNT",
+  sum,
+});
+
+export const downCount = sum => ({
+  type: "DOWN_COUNT",
+  sum,
+});
+
+
 INITIAL_STATE = {
-  name: 'Nanasi'
+  name: 'Nanasi',
+  sum: 10,
 }
 
 const reducer = (state = INITIAL_STATE, action) => {  
@@ -25,13 +37,17 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {...state, name: action.name}
     case 'DELETE_NAME':
       return {...state, name: ''}
+    case "UP_COUNT":
+      return {...state, sum: action.sum + 1}
+    case "DOWN_COUNT":
+      return {...state, sum: action.sum - 1}
     default:
       return state;
   }
 }
 
 export const reducers = combineReducers({  
-  user: reducer
+  cards: reducer
 })
 
 // store.js
