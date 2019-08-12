@@ -5,14 +5,22 @@ import {
   ScrollView,
   StyleSheet,
   Dimensions,
+  TouchableOpacity,
 } from 'react-native';
+import {
+  Card,
+  ListItem,
+  Button,
+  Icon,
+} from 'react-native-elements'
+
 import { setName, deleteName } from '../redux';
 import { connect } from 'react-redux';
 import { store } from '../redux';
 
 // データの永続化
 import Storage from 'react-native-storage';
-import { AsyncStorage } from "react-native"
+import { AsyncStorage } from "react-native";
 
 // 画面の高さを取得
 const { height } = Dimensions.get("window");
@@ -21,35 +29,47 @@ const storage = new Storage({
   storageBackend: AsyncStorage
 });
 
+var label = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+
 class List extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
         <ScrollView showsVerticalScrollIndicator={false}> 
-          <Text style={styles.welcome}>Text</Text>
-          <Text style={styles.welcome}>Text</Text>
-          <Text style={styles.welcome}>Text</Text>
-          <Text style={styles.welcome}>Text</Text>
-          <Text style={styles.welcome}>Text</Text>
-          <Text style={styles.welcome}>Text</Text>
-          <Text style={styles.welcome}>Text</Text>
+          {label.map(r =>
+            <Card
+            key={r}
+            title={r}
+            >
+            <View style={{flexDirection: 'row',justifyContent: 'center'}}>
+              <Button
+                title="-"
+                buttonStyle={{
+                  borderRadius: 50,
+                  width: 60,
+                }}
+              />
+                <Text>
+                  10
+                </Text>
+              <Button
+                title="+"
+                buttonStyle={{
+                  borderRadius: 50,
+                  width: 60,
+                }}
+              />
+              </View>
+            </Card>
+          )}
         </ScrollView>
-        <Text style={{ height: height * 0.1 /* 下部10%はスクロール外とする */, backgroundColor: 'blue', color: 'white' }}>Welcome to React Native</Text>
+        <Text style={{ height: height * 0.08, backgroundColor: 'skyblue', color: 'white' }}>Welcome to React Native</Text>
       </View>
     );
   }
 }
-const styles = StyleSheet.create({
-  welcome: {
-    flex: 1,
-    margin: 20,
-    backgroundColor: 'orange',
-    margin: 10,
-    textAlign: 'center',
-    fontSize: 20,
-    paddingTop: 70,
-  }
-});
+
+
 
 const mapStateToProps = state => ({
   // storeは巨大なJsonの塊なので、nameにjsonから取って来たデータを代入している。 

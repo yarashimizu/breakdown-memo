@@ -23,10 +23,9 @@ const App = () => {
         <Header
           placement="left"
           leftComponent={{ icon: 'menu', color: '#fff' }}
-          centerComponent={{ text: '内訳くん', style: { color: '#fff' } }}
+          centerComponent={{ text: 'カウンターズ', style: { color: '#fff' } }}
           rightComponent={{ icon: 'home', color: '#fff' }}
-        >
-        </Header>
+        />
         <List />
     </View>
   );
