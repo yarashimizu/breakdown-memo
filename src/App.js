@@ -1,11 +1,4 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
+// React-Native
 import React from 'react';
 import {
   Text,
@@ -14,25 +7,43 @@ import {
   Dimensions,
 } from 'react-native';
 
-import {Header} from 'react-native-elements';
+// redux
+import { Provider } from 'react-redux';
+import { store } from './redux';
+import { connect } from 'react-redux';
+import { setName, deleteName } from './redux';
 
 // Component
+import {Header} from 'react-native-elements';
 import List from "./compornent/List";
 
-// Componentのルーティング
 const App = () => {
   return (
     <View style={{ flex: 1 }}>
-      <Header
-        placement="left"
-        leftComponent={{ icon: 'menu', color: '#fff' }}
-        centerComponent={{ text: '内訳くん', style: { color: '#fff' } }}
-        rightComponent={{ icon: 'home', color: '#fff' }}
-      >
-      </Header>
-      <List/>
+        <Header
+          placement="left"
+          leftComponent={{ icon: 'menu', color: '#fff' }}
+          centerComponent={{ text: '内訳くん', style: { color: '#fff' } }}
+          rightComponent={{ icon: 'home', color: '#fff' }}
+        >
+        </Header>
+        <List />
     </View>
   );
 };
 
-export default App;
+const mapStateToProps = state => ({
+  // storeは巨大なJsonの塊なので、nameにjsonから取って来たデータを代入している。 
+  name: state.user.name
+})
+
+const mapDispatchToProps = {
+  // importしたactionCreatorを記述。
+  setName,
+  deleteName
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App)

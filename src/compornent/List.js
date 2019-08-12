@@ -6,15 +6,18 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native';
+import { setName, deleteName } from '../redux';
+import { connect } from 'react-redux';
+import { store } from '../redux';
 
 // 画面の高さを取得
 const { height } = Dimensions.get("window");
 
-export default class List extends Component {
+class List extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false}> 
           <Text style={styles.welcome}>Text</Text>
           <Text style={styles.welcome}>Text</Text>
           <Text style={styles.welcome}>Text</Text>
@@ -39,3 +42,19 @@ const styles = StyleSheet.create({
     paddingTop: 70,
   }
 });
+
+const mapStateToProps = state => ({
+  // storeは巨大なJsonの塊なので、nameにjsonから取って来たデータを代入している。 
+  name: state.user.name
+})
+
+const mapDispatchToProps = {
+  // importしたactionCreatorを記述。
+  setName,
+  deleteName
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(List)
