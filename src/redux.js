@@ -6,15 +6,15 @@ import {
 import * as preference from './realm';
 
 // カードの合計を増やす
-export const upCount = sum => ({
+export const upCount = id => ({
   type: "UP_COUNT",
-  sum,
+  id,
 });
 
 // カードの合計を減らす
-export const downCount = sum => ({
+export const downCount = id => ({
   type: "DOWN_COUNT",
-  sum,
+  id,
 });
 
 // カード自体を増やす(未実装)
@@ -43,9 +43,11 @@ INITIAL_STATE = {
 const reducer = (state = INITIAL_STATE, action) => {  
   switch (action.type) {
     case "UP_COUNT":
-      return {...state, sum: action.sum + 1}
+      preference.countUp(action.id);
+      return {...state, cards: preference.getTimers()}
     case "DOWN_COUNT":
-      return {...state, sum: action.sum - 1}
+      preference.countDown(action.id);
+      return {...state, cards: preference.getTimers()}
     case "ADD_CARD":
       preference.addTimer();
       return {...state, cards: preference.getTimers()}

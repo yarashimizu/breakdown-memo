@@ -64,13 +64,15 @@ class List extends Component {
                 <Button
                   title="-"
                   buttonStyle={styles.button}
+                  onPress={() => this.props.downCount(card.id)}
                 />
                   <Text>
-                    {sum}
+                    {card.count}
                   </Text>
                 <Button
                   title="+"
                   buttonStyle={styles.button}
+                  onPress={() => this.props.upCount(card.id)}
                 />
                 </View>
               </Card>

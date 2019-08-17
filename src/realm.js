@@ -11,24 +11,13 @@ const timerSchema = {
     }
 }
 
-// 全タイマーのデータ
-const timerTableSchema = {
-    name: "table",
-    primaryKey: 'id', // プライマリキーを指定
-    properties: {
-        id: 'int', // プライマリキーとして扱う (int型)
-        timers: {type: 'list', objectType: 'timer'},
-        title: 'string',
-    }
-};
-
 // 本体情報(DB)
 const realmPreference = () => {
     const realm = new Realm({
-        schema: [timerTableSchema,timerSchema] // スキーマを設定
+        schema: [timerSchema] // スキーマを設定
     });
 
-    if (realm.objects("table").length == 0) {
+    if (realm.objects("timer").length == 0) {
         // 初回はデータがないのでレコードを1つ作る
         realm.write(() => {
             realm.create(
@@ -50,10 +39,10 @@ export const getTimers = () => {
 
 
 // titleプロパティの値を取得
-export const getTitle = () => {
+export const getTitle = (id) => {
     const realm = realmPreference();
-    const obj = realm.objects("timer").filtered("id = 0");
-    return obj[0].title;
+    const target = realm.objects("timer").filtered("id = " + id);
+    return obj.title;
 };
 
 export const addTimer = () => {
@@ -78,6 +67,23 @@ export const delAllTimers = () => {
         realm.delete(allTimers);
     });
 }
+
+export const countUp = (id) => {
+    const realm = realmPreference();
+    realm.write(() => {
+        const target = realm.objects("timer").filtered("id = " + id);
+        target[0].count = target[0].count + 1;
+    });
+}
+
+export const countDown = (id) => {
+    const realm = realmPreference();
+    realm.write(() => {
+        const target = realm.objects("timer").filtered("id = " + id);
+        target[0].count = target[0].count - 1;
+    });
+}
+
 // titleプロパティに値をセット
 export const setTitle = (item) => {
     // 型の確認
