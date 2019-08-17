@@ -14,8 +14,14 @@ import {
   Button,
   Icon,
 } from 'react-native-elements'
-
-import { addCard, setName, deleteName, upCount, downCount } from '../redux';
+import {
+  addCard,
+  delCardAll,
+  setName,
+  deleteName,
+  upCount,
+  downCount
+} from '../redux';
 import { connect } from 'react-redux';
 import { store } from '../redux';
 import * as preference from '../realm';
@@ -40,6 +46,10 @@ class List extends Component {
         }}><Button
               title="addCard"
               onPress={() => this.props.addCard()}
+            />
+            <Button
+              title="delCard"
+              onPress={() => this.props.delCardAll()}
             />
             {cards.map(card =>
               <Card
@@ -87,12 +97,12 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = {
-  // importしたactionCreatorを記述。
   addCard,
+  delCardAll,
   setName,
   deleteName,
   upCount,
-  downCount,
+  downCount
 }
 
 export default connect(

@@ -50,7 +50,8 @@ const reducer = (state = INITIAL_STATE, action) => {
       preference.addTimer();
       return {...state, cards: preference.getTimers()}
     case "DEL_CARD_ALL":
-      return {...state, cards}
+      preference.delAllTimers();
+      return {...state, cards: preference.getTimers()}
     default:
       return state;
   }

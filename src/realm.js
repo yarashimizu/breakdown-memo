@@ -41,6 +41,7 @@ const realmPreference = () => {
     }
     return realm;
 };
+
 export const getTimers = () => {
     const realm = realmPreference();
     const timers = realm.objects("timer");
@@ -69,6 +70,14 @@ export const addTimer = () => {
     });
 }
 
+// タイマーのデータ全件削除
+export const delAllTimers = () => {
+    const realm = realmPreference();
+    realm.write(() => {
+        const allTimers = realm.objects('timer');
+        realm.delete(allTimers);
+    });
+}
 // titleプロパティに値をセット
 export const setTitle = (item) => {
     // 型の確認

@@ -11,7 +11,14 @@ import {
 import { Provider } from 'react-redux';
 import { store } from './redux';
 import { connect } from 'react-redux';
-import { addCard, setName, deleteName, upCount, downCount} from './redux';
+import {
+  addCard,
+  delCardAll,
+  setName,
+  deleteName,
+  upCount,
+  downCount
+} from './redux';
 
 // Container
 //import { ListContainer } from "./container/ListContainer"
@@ -26,7 +33,7 @@ const App = () => {
         <Header
           placement="left"
           /*leftComponent={{ icon: 'menu', color: '#fff' }}*/
-          centerComponent={{ text: 'カウンターズ', style: { color: '#fff' } }}
+          centerComponent={{ text: 'カウンター', style: { color: '#fff' } }}
           /*rightComponent={{ icon: 'home', color: '#fff' }}*/
           rightComponent={{ icon: 'add', color: '#fff' }}
         />
@@ -42,11 +49,12 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = {
-  // importしたactionCreatorを記述。
+  addCard,
+  delCardAll,
   setName,
   deleteName,
   upCount,
-  downCount,
+  downCount
 }
 
 export default connect(
