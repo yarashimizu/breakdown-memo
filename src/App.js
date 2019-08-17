@@ -11,7 +11,7 @@ import {
 import { Provider } from 'react-redux';
 import { store } from './redux';
 import { connect } from 'react-redux';
-import { setName, deleteName, upCount, downCount} from './redux';
+import { addCard, setName, deleteName, upCount, downCount} from './redux';
 
 // Container
 //import { ListContainer } from "./container/ListContainer"

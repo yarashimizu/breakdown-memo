@@ -3,6 +3,7 @@ import {
   combineReducers,
   createStore,
 } from 'redux';
+import * as preference from './realm';
 
 // カードの合計を増やす
 export const upCount = sum => ({
@@ -17,10 +18,13 @@ export const downCount = sum => ({
 });
 
 // カード自体を増やす(未実装)
-export const addCard = (id,title) => ({
+export const addCard = () => ({
   type: "ADD_CARD",
-  id,
-  title,
+});
+
+// カードを全消しする
+export const delCardAll = () => ({
+  type: "DEL_CARD_ALL",
 });
 
 // カードタイトルを変更する(未実装)
@@ -33,7 +37,7 @@ export const changeTitle = (id,title) => ({
 
 INITIAL_STATE = {
   sum: 10,
-  cards: [],//モデルを作成して配列として扱う
+  cards: preference.getTimers(),//モデルを作成して配列として扱う
 }
 
 const reducer = (state = INITIAL_STATE, action) => {  
@@ -43,7 +47,10 @@ const reducer = (state = INITIAL_STATE, action) => {
     case "DOWN_COUNT":
       return {...state, sum: action.sum - 1}
     case "ADD_CARD":
-      return {...state }
+      preference.addTimer();
+      return {...state, cards: preference.getTimers()}
+    case "DEL_CARD_ALL":
+      return {...state, cards}
     default:
       return state;
   }

@@ -15,48 +15,18 @@ import {
   Icon,
 } from 'react-native-elements'
 
-import { setName, deleteName, upCount, downCount } from '../redux';
+import { addCard, setName, deleteName, upCount, downCount } from '../redux';
 import { connect } from 'react-redux';
 import { store } from '../redux';
-
-// データの永続化
-import Storage from 'react-native-storage';
-import { AsyncStorage } from "react-native";
+import * as preference from '../realm';
 
 // 画面の高さを取得
 const { height,width } = Dimensions.get("window");
 
-const storage = new Storage({
-  storageBackend: AsyncStorage
-});
-
-
 class List extends Component {
   // ボタンクリック時
   onClick = (r) => {
-
-  }
-
-  // データ保存
-  _storeData = async () => {
-    try {
-      await AsyncStorage.setItem('test', 'I like to save it.');
-    } catch (error) {
-      // Error saving data
-    }
-  }
-
-  // データ取得
-  _retrieveData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('test');
-      if (value !== null) {
-        // We have data!!
-        console.log(value);
-      }
-    } catch (error) {
-      // Error retrieving data
-    }
+    console.log(r[2]);
   }
 
   render() {
@@ -67,33 +37,34 @@ class List extends Component {
         <View style={{
           flexDirection: 'row',
           flexWrap:'wrap'
-        }}>
-          {Object.keys(cards).forEach(key =>
-            <Card
-            key={cards[key]}
-            title={cards[key].title}
-            width={width*0.4}
-            >
-            <View style={{
-              flexDirection: 'row',
-              justifyContent: 'center'
-            }}>
-              <Button
-                title="-"
-                buttonStyle={styles.button}
-                onPress={() => this.props.downCount(cards[key].id)}
-              />
-                <Text>
-                  {sum}
-                </Text>
-              <Button
-                title="+"
-                buttonStyle={styles.button}
-                onPress={() => this.props.upCount(cards[key].id)}
-              />
-              </View>
-            </Card>
-          )}
+        }}><Button
+              title="addCard"
+              onPress={() => this.props.addCard()}
+            />
+            {cards.map(card =>
+              <Card
+              key={card.id}
+              title={card.title}
+              width={width*0.4}
+              >
+              <View style={{
+                flexDirection: 'row',
+                justifyContent: 'center'
+              }}>
+                <Button
+                  title="-"
+                  buttonStyle={styles.button}
+                />
+                  <Text>
+                    {sum}
+                  </Text>
+                <Button
+                  title="+"
+                  buttonStyle={styles.button}
+                />
+                </View>
+              </Card>
+            )}
           </View>
         </ScrollView>
       </View>
@@ -117,6 +88,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   // importしたactionCreatorを記述。
+  addCard,
   setName,
   deleteName,
   upCount,
