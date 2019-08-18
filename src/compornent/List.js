@@ -123,7 +123,15 @@ class List extends Component {
           </View>
         </ScrollView>
         <View
-          style={{ height: height * 0.1, color: 'white' }}>
+          style={{height: height * 0.1,
+                  width: width,
+                  color: 'white',
+                  position: "absolute",
+                  bottom: 0,
+                  backgroundColor: "#0000FF",
+                  opacity: 0.5,
+                  justifyContent: "center",
+          }}>
           <Button
             title="addCard"
             onPress={() => this.props.addCard()}
