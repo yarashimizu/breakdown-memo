@@ -36,9 +36,9 @@ const App = () => {
         <Header
           placement="left"
           /*leftComponent={{ icon: 'menu', color: '#fff' }}*/
-          centerComponent={{ text: 'カウンター', style: { color: '#fff' } }}
+          centerComponent={{ text: 'Counters', style: { color: '#fff' } }}
           /*rightComponent={{ icon: 'home', color: '#fff' }}*/
-          rightComponent={{ icon: 'add', color: '#fff' }}
+          /*rightComponent={{ icon: 'add', color: '#fff' }}*/
         />
         <List />
     </View>

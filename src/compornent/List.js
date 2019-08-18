@@ -63,7 +63,7 @@ class List extends Component {
         }}>
           <ConfirmDialog
             title="Confirm Dialog"
-            message="Are you sure about that?"
+            message="Are you sure deleting all counter?"
             visible={dialogVisibleDelAll}
             onTouchOutside={() => this.props.toggleDelAllConfrim(false)}
             positiveButton={{
@@ -87,7 +87,7 @@ class List extends Component {
               }}>
               <ConfirmDialog
                 title="Confirm Dialog"
-                message="Are you sure about that?"
+                message="Are you sure deleting this counter?"
                 visible={dialogVisible}
                 onTouchOutside={() => this.props.toggleConfrim(false)}
                 positiveButton={{
@@ -116,6 +116,17 @@ class List extends Component {
                     onPress={() => this.props.upCount(card.id)}
                   />
                 </View>
+              </View>
+              <View style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                <Button
+                  title="削除"
+                  onPress={() => this.props.toggleConfrim(true)}
+                />
               </View>
               </Card>
             )}
