@@ -18,7 +18,9 @@ import {
   setName,
   deleteName,
   upCount,
-  downCount
+  downCount,
+  toggleConfrim,
+  toggleDelAllConfrim,
 } from './redux';
 
 // Container
@@ -44,7 +46,9 @@ const App = () => {
 };
 
 const mapStateToProps = state => ({
-  cards: state.list.cards
+  cards: state.list.cards,
+  dialogVisible: state.list.dialogVisible,
+  dialogVisibleDelAll: state.list.dialogVisibleDelAll,
 })
 
 const mapDispatchToProps = {
@@ -55,6 +59,8 @@ const mapDispatchToProps = {
   deleteName,
   upCount,
   downCount,
+  toggleConfrim,
+  toggleDelAllConfrim,
 }
 
 export default connect(

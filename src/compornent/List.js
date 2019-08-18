@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
+import { ConfirmDialog } from 'react-native-simple-dialogs';
 import {
   Card,
   ListItem,
@@ -21,7 +22,9 @@ import {
   setName,
   deleteName,
   upCount,
-  downCount
+  downCount,
+  toggleConfrim,
+  toggleDelAllConfrim,
 } from '../redux';
 import { connect } from 'react-redux';
 import { store } from '../redux';
@@ -30,14 +33,26 @@ import * as preference from '../realm';
 // 画面の高さを取得
 const { height,width } = Dimensions.get("window");
 
-class List extends Component {
-  // ボタンクリック時
-  onClick = (r) => {
-    console.log(r[2]);
-  }
+const delTimeConfirm = (id) => {
+  return (
+    <View style={{ flex: 1 }}>
+        <Header
+          placement="left"
+          /*leftComponent={{ icon: 'menu', color: '#fff' }}*/
+          centerComponent={{ text: 'カウンター', style: { color: '#fff' } }}
+          /*rightComponent={{ icon: 'home', color: '#fff' }}*/
+          rightComponent={{ icon: 'add', color: '#fff' }}
+        />
+        <List />
+    </View>
+  );
+};
 
+
+
+class List extends Component {
   render() {
-    const { sum,cards } = this.props;
+    const { sum,cards,dialogVisible,dialogVisibleDelAll} = this.props;
     return (
       <View style={{ flex: 1}}>
         <ScrollView showsVerticalScrollIndicator={false}> 
@@ -46,6 +61,20 @@ class List extends Component {
           flexWrap:'wrap',
           flex: 1,
         }}>
+          <ConfirmDialog
+            title="Confirm Dialog"
+            message="Are you sure about that?"
+            visible={dialogVisibleDelAll}
+            onTouchOutside={() => this.props.toggleDelAllConfrim(false)}
+            positiveButton={{
+                title: "YES",
+                onPress: () => this.props.delTimerAll()
+            }}
+            negativeButton={{
+                title: "NO",
+                onPress: () => this.props.toggleDelAllConfrim(false)
+            }}
+          />
             {cards.map(card =>
               <Card
               key={card.id}
@@ -56,10 +85,24 @@ class List extends Component {
                 flexDirection: 'row',
                 justifyContent: 'center'
               }}>
+              <ConfirmDialog
+                title="Confirm Dialog"
+                message="Are you sure about that?"
+                visible={dialogVisible}
+                onTouchOutside={() => this.props.toggleConfrim(false)}
+                positiveButton={{
+                    title: "YES",
+                    onPress: () => this.props.delTimer(card.id)
+                }}
+                negativeButton={{
+                    title: "NO",
+                    onPress: () => this.props.toggleConfrim(false)
+                }}
+              />
                 <Button
-                  title="-"
+                  title="削除"
                   buttonStyle={styles.button}
-                  onPress={() => this.props.delTimer(card.id)}
+                  onPress={() => this.props.toggleConfrim(true)}
                 />
                 <Button
                   title="-"
@@ -82,12 +125,12 @@ class List extends Component {
         <View
           style={{ height: height * 0.1, color: 'white' }}>
           <Button
-              title="addCard"
-              onPress={() => this.props.addCard()}
-            />
+            title="addCard"
+            onPress={() => this.props.addCard()}
+          />
           <Button
             title="delCard"
-            onPress={() => this.props.delTimerAll()}
+            onPress={() => this.props.toggleDelAllConfrim(true)}
           />
         </View>
       </View>
@@ -104,7 +147,9 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = state => ({
-  cards: state.list.cards
+  cards: state.list.cards,
+  dialogVisible: state.list.dialogVisible,
+  dialogVisibleDelAll: state.list.dialogVisibleDelAll,
 })
 
 const mapDispatchToProps = {
@@ -115,6 +160,8 @@ const mapDispatchToProps = {
   deleteName,
   upCount,
   downCount,
+  toggleConfrim,
+  toggleDelAllConfrim,
 }
 
 export default connect(

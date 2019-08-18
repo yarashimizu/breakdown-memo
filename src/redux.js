@@ -10,6 +10,8 @@ const ADD_CARD =  "ADD_CARD";
 const DEL_TIMER = "DEL_TIMER";
 const DEL_TIMER_ALL = "DEL_TIMER_ALL";
 const CHANGE_TITLE = "CHANGE_TITLE";
+const TOGGLE_CONFIRM = "TOGGLE_CONFIRM";
+const TOGGLE_DEL_ALL_CONFIRM = "TOGGLE_DEL_ALL_CONFIRM";
 
 // カードの合計を増やす
 export const upCount = id => ({
@@ -28,7 +30,7 @@ export const addCard = () => ({
   type: ADD_CARD,
 });
 
-// 特定のタイマーを削除す
+// 特定のタイマーを削除する
 export const delTimer = (id) => ({
   type: DEL_TIMER,
   id,
@@ -46,10 +48,22 @@ export const changeTitle = (id,title) => ({
   title,
 });
 
+// 確認メッセージの表示
+export const toggleConfrim = (bool) => ({
+  type: TOGGLE_CONFIRM,
+  bool
+});
+
+export const toggleDelAllConfrim = (bool) => ({
+  type: TOGGLE_DEL_ALL_CONFIRM,
+  bool
+});
 
 INITIAL_STATE = {
   sum: 10,
   cards: preference.getTimers(),//モデルを作成して配列として扱う
+  dialogVisible: false,
+  dialogVisibleDelAll: false,
 }
 
 const reducer = (state = INITIAL_STATE, action) => {  
@@ -65,10 +79,14 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {...state, cards: preference.getTimers()}
     case DEL_TIMER:
       preference.delTimer(action.id);
-      return {...state, cards: preference.getTimers()}
+      return {...state, cards: preference.getTimers(), dialogVisible: false}
     case DEL_TIMER_ALL:
       preference.delTimerAll();
-      return {...state, cards: preference.getTimers()}
+      return {...state, cards: preference.getTimers(), dialogVisibleDelAll: false}
+    case TOGGLE_CONFIRM:
+      return {...state, dialogVisible: action.bool}
+    case TOGGLE_DEL_ALL_CONFIRM:
+      return {...state, dialogVisibleDelAll: action.bool}
     default:
       return state;
   }
