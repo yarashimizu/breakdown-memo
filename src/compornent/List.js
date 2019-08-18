@@ -99,25 +99,24 @@ class List extends Component {
                     onPress: () => this.props.toggleConfrim(false)
                 }}
               />
-                <Button
-                  title="削除"
-                  buttonStyle={styles.button}
-                  onPress={() => this.props.toggleConfrim(true)}
-                />
-                <Button
-                  title="-"
-                  buttonStyle={styles.button}
-                  onPress={() => this.props.downCount(card.id)}
-                />
-                  <Text>
-                    {card.count}
-                  </Text>
-                <Button
-                  title="+"
-                  buttonStyle={styles.button}
-                  onPress={() => this.props.upCount(card.id)}
-                />
+                <View style={styles.cardLeft}>
+                  <Button
+                    title="-"
+                    buttonStyle={styles.button}
+                    onPress={() => this.props.downCount(card.id)}
+                  />
                 </View>
+                    <Text style={{fontSize: 20}}>
+                      {card.count}
+                    </Text>
+                <View style={styles.cardRight}>
+                  <Button
+                    title="+"
+                    buttonStyle={styles.button}
+                    onPress={() => this.props.upCount(card.id)}
+                  />
+                </View>
+              </View>
               </Card>
             )}
           </View>
@@ -133,11 +132,11 @@ class List extends Component {
                   justifyContent: "center",
           }}>
           <Button
-            title="addCard"
+            title="addCounter"
             onPress={() => this.props.addCard()}
           />
           <Button
-            title="delCard"
+            title="delCounter"
             onPress={() => this.props.toggleDelAllConfrim(true)}
           />
         </View>
@@ -150,6 +149,19 @@ const styles = StyleSheet.create({
   button: {
     borderRadius: 50,
     width: 40,
+  },
+  cardLeft: {
+    width: 41,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  cardRight: {
+    width: 41,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
   },
 });
 
@@ -176,3 +188,11 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(List)
+
+
+/*                <Button
+                  title="削除"
+                  buttonStyle={styles.button}
+                  onPress={() => this.props.toggleConfrim(true)}
+                />
+*/
