@@ -59,8 +59,17 @@ export const addTimer = () => {
     });
 }
 
+// 選択されたタイマーを削除
+export const delTimer = (id) => {
+    const realm = realmPreference();
+    realm.write(() => {
+        const target = realm.objects('timer').filtered("id = " + id);
+        realm.delete(target[0]);
+    });
+}
+
 // タイマーのデータ全件削除
-export const delAllTimers = () => {
+export const delTimerAll = () => {
     const realm = realmPreference();
     realm.write(() => {
         const allTimers = realm.objects('timer');

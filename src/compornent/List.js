@@ -16,7 +16,8 @@ import {
 } from 'react-native-elements'
 import {
   addCard,
-  delCardAll,
+  delTimer,
+  delTimerAll,
   setName,
   deleteName,
   upCount,
@@ -42,15 +43,9 @@ class List extends Component {
         <ScrollView showsVerticalScrollIndicator={false}> 
         <View style={{
           flexDirection: 'row',
-          flexWrap:'wrap'
-        }}><Button
-              title="addCard"
-              onPress={() => this.props.addCard()}
-            />
-            <Button
-              title="delCard"
-              onPress={() => this.props.delCardAll()}
-            />
+          flexWrap:'wrap',
+          flex: 1,
+        }}>
             {cards.map(card =>
               <Card
               key={card.id}
@@ -61,6 +56,11 @@ class List extends Component {
                 flexDirection: 'row',
                 justifyContent: 'center'
               }}>
+                <Button
+                  title="-"
+                  buttonStyle={styles.button}
+                  onPress={() => this.props.delTimer(card.id)}
+                />
                 <Button
                   title="-"
                   buttonStyle={styles.button}
@@ -79,6 +79,17 @@ class List extends Component {
             )}
           </View>
         </ScrollView>
+        <View
+          style={{ height: height * 0.1, color: 'white' }}>
+          <Button
+              title="addCard"
+              onPress={() => this.props.addCard()}
+            />
+          <Button
+            title="delCard"
+            onPress={() => this.props.delTimerAll()}
+          />
+        </View>
       </View>
     );
   }
@@ -93,18 +104,17 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = state => ({
-  // storeは巨大なJsonの塊なので、nameにjsonから取って来たデータを代入している。 
-  sum: state.list.sum,
   cards: state.list.cards
 })
 
 const mapDispatchToProps = {
   addCard,
-  delCardAll,
+  delTimerAll,
+  delTimer,
   setName,
   deleteName,
   upCount,
-  downCount
+  downCount,
 }
 
 export default connect(
