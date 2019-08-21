@@ -52,12 +52,12 @@ class List extends Component {
             visible={dialogVisibleDelAll}
             onTouchOutside={() => this.props.toggleDelAllConfrim(false)}
             positiveButton={{
-                title: "YES",
-                onPress: () => this.props.delTimerAll()
+              title: "YES",
+              onPress: () => this.props.delTimerAll(),
             }}
             negativeButton={{
-                title: "NO",
-                onPress: () => this.props.toggleDelAllConfrim(false)
+              title: "NO",
+              onPress: () => this.props.toggleDelAllConfrim(false),
             }}
           />
           {/* 各タイマーの設定*/}
@@ -94,12 +94,12 @@ class List extends Component {
                     visible={dialogVisible}
                     onTouchOutside={() => this.props.toggleConfrim(false)}
                     positiveButton={{
-                        title: "YES",
-                        onPress: () => this.props.delTimer(card.id)
+                      title: "YES",
+                      onPress: () => this.props.delTimer(card.id),
                     }}
                     negativeButton={{
-                        title: "NO",
-                        onPress: () => this.props.toggleConfrim(false)
+                      title: "NO",
+                      onPress: () => this.props.toggleConfrim(false),
                     }}
                   />
                   <View style={{flexDirection: 'row', justifyContent: 'center',marginBottom: 5}}>
@@ -134,21 +134,22 @@ class List extends Component {
           </View>
         </ScrollView>
         <View
-          style={{height: height * 0.1,
-                  width: width,
-                  color: 'white',
-                  position: "absolute",
-                  bottom: 0,
-                  backgroundColor: "#0000FF",
-                  opacity: 0.9,
-                  justifyContent: "center",
+          style={{
+            height: height * 0.1,
+            width: width,
+            color: 'white',
+            position: "absolute",
+            bottom: 0,
+            backgroundColor: "#0000FF",
+            opacity: 0.9,
+            justifyContent: "center",
           }}>
           <Button
             title="addCounter"
             onPress={() => this.props.addCard()}
           />
           <Button
-            title="delCounter"
+            title="delAllCounter"
             onPress={() => this.props.toggleDelAllConfrim(true)}
           />
         </View>
