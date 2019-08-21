@@ -14,6 +14,7 @@ import {
   ListItem,
   Button,
   Icon,
+  Row,
 } from 'react-native-elements'
 import {
   addCard,
@@ -33,23 +34,6 @@ import * as preference from '../realm';
 // 画面の高さを取得
 const { height,width } = Dimensions.get("window");
 
-const delTimeConfirm = (id) => {
-  return (
-    <View style={{ flex: 1 }}>
-        <Header
-          placement="left"
-          /*leftComponent={{ icon: 'menu', color: '#fff' }}*/
-          centerComponent={{ text: 'カウンター', style: { color: '#fff' } }}
-          /*rightComponent={{ icon: 'home', color: '#fff' }}*/
-          rightComponent={{ icon: 'add', color: '#fff' }}
-        />
-        <List />
-    </View>
-  );
-};
-
-
-
 class List extends Component {
   render() {
     const { sum,cards,dialogVisible,dialogVisibleDelAll} = this.props;
@@ -61,6 +45,7 @@ class List extends Component {
           flexWrap:'wrap',
           flex: 1,
         }}>
+          {/* 全件削除の確認メッセージ */}
           <ConfirmDialog
             title="Confirm Dialog"
             message="Are you sure deleting all counter?"
@@ -75,60 +60,76 @@ class List extends Component {
                 onPress: () => this.props.toggleDelAllConfrim(false)
             }}
           />
+          {/* 各タイマーの設定*/}
             {cards.map(card =>
-              <Card
+            <View 
               key={card.id}
-              title={card.title}
-              width={width*0.4}
-              >
-              <View style={{
-                flexDirection: 'row',
-                justifyContent: 'center'
-              }}>
-              <ConfirmDialog
-                title="Confirm Dialog"
-                message="Are you sure deleting this counter?"
-                visible={dialogVisible}
-                onTouchOutside={() => this.props.toggleConfrim(false)}
-                positiveButton={{
-                    title: "YES",
-                    onPress: () => this.props.delTimer(card.id)
-                }}
-                negativeButton={{
-                    title: "NO",
-                    onPress: () => this.props.toggleConfrim(false)
-                }}
-              />
-                <View style={styles.cardLeft}>
-                  <Button
-                    title="-"
-                    buttonStyle={styles.button}
-                    onPress={() => this.props.downCount(card.id)}
+              style={{
+                margin: 7,
+                padding: 6,
+                borderColor: 'lightgray',
+                borderWidth: 1,
+            }}>
+              <View style={{width: width*0.25}}>
+                <TouchableOpacity style={{
+                  borderBottomColor: 'lightgray',
+                  borderBottomWidth: 1,
+                  justifyContent: 'center',
+                  flexDirection: 'row',
+                  marginBottom: 5,
+                }}>
+                  <Text style={{fontSize: 20}}>
+                    {card.title}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+                <View style={{
+                  flexDirection: 'column',
+                  justifyContent: 'center'
+                }}>
+                  {/* 選択されたタイマーの削除確認メッセージ */}
+                  <ConfirmDialog
+                    title="Confirm Dialog"
+                    message="Are you sure deleting this counter?"
+                    visible={dialogVisible}
+                    onTouchOutside={() => this.props.toggleConfrim(false)}
+                    positiveButton={{
+                        title: "YES",
+                        onPress: () => this.props.delTimer(card.id)
+                    }}
+                    negativeButton={{
+                        title: "NO",
+                        onPress: () => this.props.toggleConfrim(false)
+                    }}
                   />
-                </View>
+                  <View style={{flexDirection: 'row', justifyContent: 'center',marginBottom: 5}}>
                     <Text style={{fontSize: 20}}>
                       {card.count}
                     </Text>
-                <View style={styles.cardRight}>
-                  <Button
-                    title="+"
-                    buttonStyle={styles.button}
-                    onPress={() => this.props.upCount(card.id)}
-                  />
+                  </View>
+                  <View style={{
+                    flexDirection: 'row',
+                    justifyContent: 'center'
+                  }}>
+                    <View style={styles.cardLeft}>
+                      <Button
+                        large
+                        title="-"
+                        buttonStyle={styles.button}
+                        onPress={() => this.props.downCount(card.id)}
+                      />
+                    </View>
+                    <View style={styles.cardRight}>
+                      <Button
+                        large
+                        title="+"
+                        buttonStyle={styles.button}
+                        onPress={() => this.props.upCount(card.id)}
+                      />
+                    </View>
+                  </View>
                 </View>
               </View>
-              <View style={{
-                      flex: 1,
-                      flexDirection: 'row',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}>
-                <Button
-                  title="削除"
-                  onPress={() => this.props.toggleConfrim(true)}
-                />
-              </View>
-              </Card>
             )}
           </View>
         </ScrollView>
@@ -139,7 +140,7 @@ class List extends Component {
                   position: "absolute",
                   bottom: 0,
                   backgroundColor: "#0000FF",
-                  opacity: 0.5,
+                  opacity: 0.9,
                   justifyContent: "center",
           }}>
           <Button
@@ -201,9 +202,9 @@ export default connect(
 )(List)
 
 
-/*                <Button
-                  title="削除"
-                  buttonStyle={styles.button}
-                  onPress={() => this.props.toggleConfrim(true)}
-                />
+/*
+                    <Button
+                      title="削除"
+                      onPress={() => this.props.toggleConfrim(true)}
+                    />
 */

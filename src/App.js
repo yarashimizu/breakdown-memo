@@ -29,6 +29,13 @@ import {
 // Component
 import {Header} from 'react-native-elements';
 import List from "./compornent/List";
+const Title = () => {
+  return (
+    <View>
+      <Text style={{fontSize: 20, color: 'white'}}>Counters</Text>
+    </View>
+    );
+};
 
 const App = () => {
   return (
@@ -36,7 +43,7 @@ const App = () => {
         <Header
           placement="left"
           /*leftComponent={{ icon: 'menu', color: '#fff' }}*/
-          centerComponent={{ text: 'Counters', style: { color: '#fff' } }}
+          centerComponent={<Title />}
           /*rightComponent={{ icon: 'home', color: '#fff' }}*/
           /*rightComponent={{ icon: 'add', color: '#fff' }}*/
         />
